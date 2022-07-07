@@ -1,5 +1,4 @@
-$structure-size: min(1.65vh, 2.15vw);
-$text-size: min(2.45vh, 3.75vw);
+$structure-size: min(1.45vh, 2.55vw);
 $base-layer: 1000;
 
 @mixin whole-screen {
@@ -32,19 +31,28 @@ $base-layer: 1000;
 
 #site-console {
     @include center-children();
+    flex-direction: column;
+
     cursor: text;
     position: absolute;
     width: 100%;
     height: 100%;
     // background-color: antiquewhite;
+
+
     .input {
         @include hide-scrollbar();
-        width: 25em;
-        height: 10em;
+
+        font-size: 1.2em;
+        width: calc(27.5em / 1.2);
+        height: 13em;
+        
         
         // background-color: #787882;
 
         word-break: break-all;
+        white-space: pre-wrap;
+
         letter-spacing: 0.2em;
 
         color: rgb(225, 225, 225);
@@ -86,9 +94,10 @@ $base-layer: 1000;
         perspective-origin: 50% 50%;
 
         position: absolute;
-        height: 35%;
+        max-height: 35%;
+        height: 20em;
         width: 100%;
-        top: 65%;
+        bottom: 0%;
         
         .surface {
             position: absolute;
@@ -96,7 +105,7 @@ $base-layer: 1000;
             height: 100%;
 
             background-color: #787882;
-            background-image: linear-gradient(#000, rgba(50, 50, 50, 0.5));
+            background-image: linear-gradient(#000, rgba(50, 50, 50, 0.75));
             filter: blur(1em);
         }
 
@@ -107,30 +116,30 @@ $base-layer: 1000;
             background-position: center;
 
             position: absolute;
-            width: 25em;
-            height: 25em;
+            width: 27.5em;
+            height: 27.5em;
             top: 0;
-            transform: translate(0, -40%);
+            transform: translate(0, -52.5%);
 
             z-index: $base-layer + 1;
             filter: grayscale(1) brightness(0.85);
             cursor: pointer;
 
             &.pressed {
-                width: 24em;
-                height: 24em;
+                width: 26.5em;
+                height: 26.5em;
                 filter: grayscale(1) brightness(0.7);
             }
         }
 
         .monitor-shadow {
             position: absolute;
-            width: 35em;
+            width: 37.5em;
             height: 10em;
             top: 0;
-            transform: translate(0, 52.5%);
+            transform: translate(0, 37.5%);
 
-            background-image: radial-gradient(at 50% 50%, #000, #0000 85%);
+            background-image: radial-gradient(at 50% 50%, rgba(0, 0, 0, 0.75), #0000 90%);
             z-index: $base-layer;
             filter: blur(1em);
         }
@@ -145,21 +154,23 @@ $base-layer: 1000;
             height: fit-content;
             // background-color: rgba(0, 200, 100, 0.5);
 
-            top: 16.25em;
+            top: 15em;
             transform: translate(0, -50%) rotateX(45deg);
             .first, .second {
-                letter-spacing: 0.6em;
+                letter-spacing: 0.5em;
                 margin-left: 0.3em;
+                white-space: nowrap;
             }
 
             .first {
-                font-size: 1em;
+                font-size: 0.9em;
                 transform: rotateZ(8deg);
             }
 
             .second {
                 font-size: 1.25em;
                 transform: rotateZ(4deg);
+                // color: #fff0c7;
             }
 
             

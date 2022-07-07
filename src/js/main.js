@@ -45,11 +45,7 @@ function addButtonBehavior(btnEl, downFunc, upFunc) {
     });
 }
 
-function startPlaceholderAnimation(input, text, speed, callback) {
-
-    const printChar = (char) => {
-        input.placeholder += char;
-    }
+function startTextTypingAnimation(text, speed, getCharFunc, setCharFunc, callback, ) {
 
     const printText = (text) => {
         let index = 0;
@@ -58,7 +54,7 @@ function startPlaceholderAnimation(input, text, speed, callback) {
             setTimeout(() => {
                 if (index < text.length) {
                     const char = text[index++];
-                    printChar(char);
+                    setCharFunc(getCharFunc() + char);
                     printLoop();
                 } else {
                     callback();
@@ -73,12 +69,11 @@ function startPlaceholderAnimation(input, text, speed, callback) {
 
 }
 
-function clearPlaceholderAnimation(input, speed, callback) {
-
+function clearTextTypingAnimation(speed, getCharFunc, setCharFunc ,callback) {
     const clearLoop = () => {
         setTimeout(() => {
-            if (input.placeholder !== '') {
-                input.placeholder = input.placeholder.slice(0,-1);
+            if (getCharFunc() !== '') {
+                setCharFunc(getCharFunc().slice(0,-1));
                 clearLoop();
             } else {
                 callback();
@@ -100,31 +95,53 @@ function initStructures() {
     flickeringTextEl(second, '@ 2022 WNFA Posters Generator');
 
     // console
+    // const prompt = document.querySelector('#site-prompt');
     const input = document.querySelector('#site-console .input');
-    const printList = [
-        ['Type into this area to write a poem, then click the TV to generate the poster.', 0.15],
-        ['点击这里写一首诗，然后点击电视机开始生成海报。', 0.25],
-        ['荷叶滴落泪水，来不及浸透书页。一百年一千年，点燃一片通电的网。回想回想，那心的铁片，也要发出轰响。', 0.1],
+
+    const printPlaceholderTextList = [
+        ['Type into this area to write a poem,\nthen, click the TV to generate the poster.', 0.075],
+        ['点击这里写一首诗，\n然后点击电视机开始生成海报。', 0.2],
+        ['荷叶滴落泪水，来不及浸透书页。\n一百年一千年，点燃一片通电的网。\n\n回想回想，\n那心的铁片，\n也要发出轰响。', 0.2],
     ];
 
-    const startTextListLoop = () => {
-        const print = printList.shift();
-        printList.push(print);
+    // const printPromptTextList = [
+    //     ['Click below to start writing.', 0.075],
+    //     ['Click TV once to generate poster.', 0.075],
+    //     ['点击这里写一首诗。', 0.2],
+    // ];
+
+    const startPlaceholderTextListLoop = () => {
+        const print = printPlaceholderTextList.shift();
+        printPlaceholderTextList.push(print);
         
-        startPlaceholderAnimation(input, print[0], print[1], () => {
+        startTextTypingAnimation(print[0], print[1], () => input.placeholder, (char) => input.placeholder = char, () => {
             setTimeout(() => {
-                clearPlaceholderAnimation(input, 0.05, () => {
+                clearTextTypingAnimation(0.05, () => input.placeholder, (char) => input.placeholder = char, () => {
                     setTimeout(() => {
-                        startTextListLoop();
+                        startPlaceholderTextListLoop();
                     }, 2000);
                 });                 
             }, 2000);
         });
-        
-
     }
 
-    startTextListLoop();
+    // const startPromptTextListLoop = () => {
+    //     const print = printPromptTextList.shift();
+    //     printPromptTextList.push(print);
+        
+    //     startTextTypingAnimation(print[0], print[1], () => prompt.innerHTML, (char) => prompt.innerHTML = char, () => {
+    //         setTimeout(() => {
+    //             clearTextTypingAnimation(0.05, () => prompt.innerHTML, (char) => prompt.innerHTML = char, () => {
+    //                 setTimeout(() => {
+    //                     startPromptTextListLoop();
+    //                 }, 2000);
+    //             });                 
+    //         }, 2000);
+    //     });
+    // }
+    
+    // startPromptTextListLoop();
+    startPlaceholderTextListLoop();
 
 
     // initPlaceholderAnimation(input, [
