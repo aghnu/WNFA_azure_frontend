@@ -110,39 +110,66 @@ $base-layer: 1000;
         }
 
         .monitor {
-            background-image: url('../img/monitor.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-
+            @include center-children();
             position: absolute;
-            width: 27.5em;
-            height: 27.5em;
+
             top: 0;
             transform: translate(0, -52.5%);
-
             z-index: $base-layer + 1;
-            filter: grayscale(1) brightness(0.85);
-            cursor: pointer;
 
             &.pressed {
-                width: 26.5em;
-                height: 26.5em;
-                filter: grayscale(1) brightness(0.7);
+                font-size: 0.95em;
+                // width: 26.5em;
+                // height: 26.5em;
+                
+                .monitor-frame {
+                    filter: grayscale(1) brightness(0.75);
+                }
+            }    
+
+            .poster {
+                // background-color: rgba(255, 0, 0, 0.5);
+                width: 16.5em;
+                height: 12.5em;
+
+                position: absolute;
+                transform: translate(-3em, -1em);
+                z-index: $base-layer + 2; 
+
+                object-fit: fill;
+
+            }
+
+
+            .monitor-frame {
+                background-image: url('../img/monitor.png');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+
+                width: 27.5em;
+                height: 27.5em;
+                position: absolute;
+
+                
+                filter: grayscale(1) brightness(0.85);
+                cursor: pointer;
+                z-index: $base-layer + 1;        
+            }
+            .monitor-shadow {
+                position: absolute;
+                width: 37.5em;
+                height: 10em;
+                top: 0;
+                transform: translate(0, 37.5%);
+
+                background-image: radial-gradient(at 50% 50%, rgba(0, 0, 0, 0.75), #0000 90%);
+                z-index: $base-layer;
+                filter: blur(1em);
             }
         }
 
-        .monitor-shadow {
-            position: absolute;
-            width: 37.5em;
-            height: 10em;
-            top: 0;
-            transform: translate(0, 37.5%);
 
-            background-image: radial-gradient(at 50% 50%, rgba(0, 0, 0, 0.75), #0000 90%);
-            z-index: $base-layer;
-            filter: blur(1em);
-        }
 
         .footer {
             @include center-children();
