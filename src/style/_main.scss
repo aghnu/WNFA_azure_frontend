@@ -200,7 +200,7 @@ $base-layer: 1000;
         .monitor {
             @include center-children();
             position: absolute;
-            top: -0.5em;
+            top: -1.5em;
             z-index: $base-layer + 1;
             transition: transform 0.3s, filter 0.3s;
 
@@ -248,6 +248,19 @@ $base-layer: 1000;
                 .monitor-frame {
                     width: 30em;
                     transform: translate(0, -10%);
+                }
+            }
+
+            &.monitor-3 {
+                .poster {
+                    width: 12.2em;
+                    height: 6em;
+                    transform: translate(-3.5em, -4em);        
+                }
+
+                .monitor-frame {
+                    width: 30em;
+                    transform: translate(0, 0%);
                 }
             }
 

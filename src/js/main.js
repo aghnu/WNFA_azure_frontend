@@ -3,6 +3,7 @@ import transition_pic from '../img/transition.webp';
 import monitor_frame_0 from '../img/monitor0.webp';
 import monitor_frame_1 from '../img/monitor1.webp';
 import monitor_frame_2 from '../img/monitor2.webp';
+import monitor_frame_3 from '../img/monitor3.webp';
 
 import {
     flickeringTextEl
@@ -20,6 +21,7 @@ const monitor_frames = [
     {class: 'monitor-0', url: monitor_frame_0},
     {class: 'monitor-1', url: monitor_frame_1},
     {class: 'monitor-2', url: monitor_frame_2},
+    {class: 'monitor-3', url: monitor_frame_3},
 ]
 
 const read_state = {
