@@ -109,6 +109,7 @@ function initStructures() {
         if (input.value !== '' && input.value !== oldText) {
             flickeringTextEl(prompt, 'Generating / 生成中');
             site_structure.classList.add('processing');
+            input.blur();
             generatePoster(input.value, (d) => {
 
                 current_button_up_func = button_up_func_show;

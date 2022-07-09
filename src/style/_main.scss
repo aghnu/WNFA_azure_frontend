@@ -51,12 +51,14 @@ $base-layer: 1000;
     height: 100%;
     // background-color: antiquewhite;
 
+    transition: filter 0.3s;
+
 
     .input {
         @include hide-scrollbar();
 
-        font-size: 1.2em;
-        width: calc(27.5em / 1.2);
+        font-size: 1.35em;
+        width: calc(#{$structure-size} * 27.5);
         height: 13em;
         
         
@@ -123,6 +125,15 @@ $base-layer: 1000;
                 filter: brightness(0.5);
             }
 
+        }
+
+        #site-console {
+            pointer-events: none;
+            filter: brightness(0.5);
+            // animation: loading 2.5s infinite;
+            .input {
+                pointer-events: none;
+            }
         }
 
         .floor .monitor {
@@ -229,9 +240,9 @@ $base-layer: 1000;
 
             // margin-bottom: 6em;
             position: absolute;
-            top: 5em;
+            top: calc(#{$structure-size} * 7.5);
             z-index: 5555;
-            font-size: 1.5em;
+            font-size: 1.35em;
             letter-spacing: 0.5em;
             // background-color: black;
         }
