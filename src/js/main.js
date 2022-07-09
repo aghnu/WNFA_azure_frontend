@@ -1,6 +1,8 @@
 import '../style/styles.scss'
-import transition_gif from '../img/transition_animation.gif';
-import monitor_frame_png from '../img/monitor.png';
+import transition_pic from '../img/transition.webp';
+import monitor_frame_0 from '../img/monitor0.webp';
+import monitor_frame_1 from '../img/monitor1.webp';
+import monitor_frame_2 from '../img/monitor2.webp';
 
 import {
     flickeringTextEl
@@ -13,6 +15,12 @@ import {
     generatePoster,
     ERROR_CODE
 } from './generatePoster';
+
+const monitor_frames = [
+    {class: 'monitor-0', url: monitor_frame_0},
+    {class: 'monitor-1', url: monitor_frame_1},
+    {class: 'monitor-2', url: monitor_frame_2},
+]
 
 const read_state = {
     frameInit: false,
@@ -143,7 +151,7 @@ function initStructures() {
                 input.addEventListener('input', () => {
                     current_button_up_func = button_up_func_submit;
                     oldText = "";
-                    poster.src = transition_gif;
+                    poster.src = transition_pic;
                     flickeringTextEl(prompt, 'System Ready / 系统就绪');
                 }, { once: true});
             }, (error_code) => {
@@ -202,8 +210,12 @@ function initStructures() {
         current_button_up_func();
     })
 
-    // set up image
+    // set up monitor frame
     const monitor_frame = document.querySelector('#site-structure .floor .monitor .monitor-frame');
+    const monitor = document.querySelector('#site-structure .floor .monitor');
+    const selected_monitor_frame = monitor_frames[Math.floor(Math.random() * monitor_frames.length)];
+
+    monitor.classList.add(selected_monitor_frame.class);
 
     poster.addEventListener('load', () => {
         read_state.posterInit = true;
@@ -213,8 +225,8 @@ function initStructures() {
         read_state.frameInit = true;
     }, {once: true});
 
-    poster.src = transition_gif;
-    monitor_frame.src = monitor_frame_png;
+    poster.src = transition_pic;
+    monitor_frame.src = selected_monitor_frame.url;
 
     // wait for font
     document.fonts.ready.then(()=>{read_state.fontsLoaded = true});
