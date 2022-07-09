@@ -1,5 +1,6 @@
 import '../style/styles.scss'
 import transition_gif from '../img/transition_animation.gif';
+import monitor_frame_png from '../img/monitor.png';
 
 import {
     flickeringTextEl
@@ -12,6 +13,25 @@ import {
     generatePoster,
     ERROR_CODE
 } from './generatePoster';
+
+const read_state = {
+    frameInit: false,
+    posterInit: false,
+    fontsLoaded: false,
+}
+
+function checkLoaded() {
+    return read_state.frameInit && 
+        read_state.posterInit &&
+        read_state.fontsLoaded;
+        // document.fonts.check('Qi Hei') &&
+        // document.fonts.check('Syne');
+}
+
+function loaded() {
+    const site_loading_screen = document.querySelector('#site-informative .loading');
+    site_loading_screen.classList.add('hide');
+}
 
 function addButtonBehavior(btnEl, downFunc, upFunc) {
     let buttonDown = false;
@@ -71,8 +91,8 @@ function initStructures() {
     const input = document.querySelector('#site-console .input');
 
     const printPlaceholderTextList = [
-        ['Type into this area to write a poem,\nthen, click the TV to generate the poster.', 0.075],
-        ['点击这里写一首诗，\n然后点击电视机开始生成海报。', 0.2],
+        ['Type into this area to write a poem, then, click the TV to generate the poster.', 0.075],
+        ['点击这里写一首诗，然后点击电视机开始生成海报。', 0.2],
         ['荷叶滴落泪水，来不及浸透书页。\n一百年一千年，点燃一片通电的网。\n\n回想回想，\n那心的铁片，\n也要发出轰响。', 0.2],
     ];
 
@@ -100,7 +120,6 @@ function initStructures() {
     const button = document.querySelector('#site-structure .floor .monitor');
     const poster = document.querySelector('#site-structure .floor .monitor .poster');
     let oldText = "";
-    poster.src = transition_gif;
 
     let current_button_down_func;
     let current_button_up_func;
@@ -183,14 +202,54 @@ function initStructures() {
         current_button_up_func();
     })
 
+    // set up image
+    const monitor_frame = document.querySelector('#site-structure .floor .monitor .monitor-frame');
 
-    
-    
+    poster.addEventListener('load', () => {
+        read_state.posterInit = true;
+    }, {once: true});
 
+    monitor_frame.addEventListener('load', () => {
+        read_state.frameInit = true;
+    }, {once: true});
+
+    poster.src = transition_gif;
+    monitor_frame.src = monitor_frame_png;
+
+    // wait for font
+    document.fonts.ready.then(()=>{read_state.fontsLoaded = true});
 }
 
 function main() {
     initStructures();
+
+    // loading prompt
+    const site_loading_screen = document.querySelector('#site-informative .loading');
+    const prompt = document.querySelector('#site-informative .loading .prompt');
+
+    const loadingPrompts = [
+        '·',
+        '· ·',
+        '· · ·',
+    ]
+
+    let i = 0;
+    let loadingCompleteFunc = () => {};
+    let loadingPromptInterval = setInterval(() => {
+        prompt.innerHTML = "Loading / 载入中" + "<br>" + loadingPrompts[i];
+        i = (i + 1) % loadingPrompts.length;
+        loadingCompleteFunc();
+    }, 750);
+
+    setTimeout(() => {
+        loadingCompleteFunc = () => {
+            if (checkLoaded()) {
+                loaded();
+            }
+        }
+    }, 2250);
+
+
 }
 
 window.addEventListener('load', main);
