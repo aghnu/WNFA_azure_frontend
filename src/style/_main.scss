@@ -1,4 +1,4 @@
-$structure-size: min(1.45vh, 2.05vw);
+$structure-size: min(1.25vh, 2.05vw);
 
 $base-layer: 1000;
 
@@ -73,18 +73,18 @@ $base-layer: 1000;
     .input {
         @include hide-scrollbar();
 
-        font-size: 1.35em;
+        font-size: 1.25em;
         width: calc(#{$structure-size} * 32);
         height: 13em;
         
         
         // background-color: #787882;
 
-        word-break: break-all;
+        // word-break: break-all;
         white-space: pre-wrap;
         line-height: 1.5em;
 
-        letter-spacing: 0.2em;
+        letter-spacing: 0.35em;
 
         color: rgb(225, 225, 225);
 
@@ -192,14 +192,15 @@ $base-layer: 1000;
             height: 100%;
 
             background-color: #787882;
-            background-image: linear-gradient(#000, rgba(50, 50, 50, 0.85));
+            // background-image: linear-gradient(#000, rgba(50, 50, 50, 0.85));
+            background-image: radial-gradient(at 50% 100%, rgba(0, 0, 0, 0.56), #000 90%);
             filter: blur(1em);
         }
 
         .monitor {
             @include center-children();
             position: absolute;
-            top: -1em;
+            top: -0.5em;
             z-index: $base-layer + 1;
             transition: transform 0.3s, filter 0.3s;
 
@@ -236,9 +237,9 @@ $base-layer: 1000;
             }
             .monitor-shadow {
                 position: absolute;
-                width: 37.5em;
+                width: 42.5em;
                 height: 10em;
-                top: 0;
+                top: 0.5em;
                 transform: translate(0, 37.5%);
 
                 background-image: radial-gradient(at 50% 50%, rgba(0, 0, 0, 0.75), #0000 90%);
@@ -261,6 +262,8 @@ $base-layer: 1000;
             font-size: 1.35em;
             letter-spacing: 0.5em;
             // background-color: black;
+
+            // transform: rotateX(45deg);
         }
 
         .footer {
@@ -273,7 +276,7 @@ $base-layer: 1000;
             position: absolute;
             height: fit-content;
 
-            top: 18em;
+            top: 17.5em;
             transform: translate(0, -50%) rotateX(45deg);
             .first, .second, .prompt {
                 letter-spacing: 0.5em;
@@ -282,15 +285,15 @@ $base-layer: 1000;
             }
 
             .first {
-                font-size: 1.25em;
+                font-size: 1.15em;
                 // color: #fff0c7;
-                // transform: rotateZ(8deg);  
+                transform: rotateZ(6deg);  
             }
 
             .second {
-                font-size: 1.5em;
+                font-size: 1.4em;
                 // color: #fff0c7;
-                // transform: rotateZ(4deg);
+                transform: rotateZ(3deg);
             }
 
 
