@@ -1,4 +1,5 @@
 export function flickeringTextEl(pEL, text) {
+    pEL.innerHTML = "";
     let ifContinue = true;
     for (let i = 0; i < text.length; i++) {
         const el = document.createElement('span');

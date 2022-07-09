@@ -9,7 +9,8 @@ import {
     clearTextTypingAnimation
 } from './typingAnimation';
 import {
-    generatePoster
+    generatePoster,
+    ERROR_CODE
 } from './generatePoster';
 
 function addButtonBehavior(btnEl, downFunc, upFunc) {
@@ -57,6 +58,8 @@ function addButtonBehavior(btnEl, downFunc, upFunc) {
 }
 
 function initStructures() {
+    const site_structure = document.querySelector('#site-structure');
+
     // logo
     const first = document.querySelector('#site-structure .footer .first');
     const second = document.querySelector('#site-structure .footer .second');
@@ -88,25 +91,101 @@ function initStructures() {
         });
     }
     startPlaceholderTextListLoop();
-
+    
+    // prompt init
+    const prompt = document.querySelector('#site-structure .prompt');
+    flickeringTextEl(prompt, 'System Ready / 系统就绪');
+    
     // enter button
     const button = document.querySelector('#site-structure .floor .monitor');
     const poster = document.querySelector('#site-structure .floor .monitor .poster');
+    let oldText = "";
     poster.src = transition_gif;
-    addButtonBehavior(button, () => {
-        button.classList.add('pressed');
-        if (input.value !== '') {
+
+    let current_button_down_func;
+    let current_button_up_func;
+
+    const button_up_func_submit = () => {
+        if (input.value !== '' && input.value !== oldText) {
+            flickeringTextEl(prompt, 'Generating / 生成中');
+            site_structure.classList.add('processing');
             generatePoster(input.value, (d) => {
-                
+
+                current_button_up_func = button_up_func_show;
+
+
+                site_structure.classList.remove('processing');
+                flickeringTextEl(prompt, 'Poster Ready / 海报就绪');
                 poster.src = "data:image/jpeg; base64, " + d.image_data;
+                oldText = input.value;
+
+                // when value change remove this state
+                input.addEventListener('input', () => {
+                    current_button_up_func = button_up_func_submit;
+                    oldText = "";
+                    poster.src = transition_gif;
+                    flickeringTextEl(prompt, 'System Ready / 系统就绪');
+                }, { once: true});
             }, (error_code) => {
+                site_structure.classList.remove('processing');
+
                 console.error('ERROR: ' + error_code);
+
+                switch (error_code) {
+                    case ERROR_CODE.NETWORK_ERROR:
+                        flickeringTextEl(prompt, 'Network Error / 网络错误');
+
+                        break;
+                    case ERROR_CODE.SERVER_ERROR:
+                        flickeringTextEl(prompt, 'Sever Error / 服务器错误');
+
+                        break;
+                    case ERROR_CODE.USER_ERROR:
+                        oldText = input.value;
+                        flickeringTextEl(prompt, 'Invalid input / 文本不规范');
+                        break;
+                }
+
             });
         }
+    }
 
+    const button_up_func_show = () => {
+        const posterview = document.querySelector('#site-posterview');
+        posterview.innerHTML = "";
+
+        const posterDetailed = document.createElement('img');
+        posterDetailed.classList.add('poster');
+        posterDetailed.src = poster.src;
+
+        posterview.appendChild(posterDetailed);
+
+
+        posterview.addEventListener('click', () => {
+            posterview.classList.remove('show');
+        }, {once: true});
+
+
+        posterview.classList.add('show');
+    }
+
+    current_button_down_func = () => {};
+    current_button_up_func = button_up_func_submit;
+
+
+
+    addButtonBehavior(button, () => {
+        button.classList.add('pressed');
+        current_button_down_func();
     }, () => {
         button.classList.remove('pressed');
+        current_button_up_func();
     })
+
+
+    
+    
+
 }
 
 function main() {
