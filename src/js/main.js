@@ -156,7 +156,7 @@ function initStructures() {
     const second = document.querySelector('#site-structure .footer .second');
 
     flickeringTextEl(first, 'GENGYUAN HUANG & YUAN FANG');
-    flickeringTextEl(second, '© 2022 WNFA Posters Generator');
+    flickeringTextEl(second, '© 2022 WNFA Poster Generator');
 
     // console
     const input = document.querySelector('#site-console .input');
