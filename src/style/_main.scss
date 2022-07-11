@@ -220,7 +220,7 @@ $base-layer: 1000;
                 }
 
                 .monitor-frame {
-                    width: 32em;
+                    width: 29em;
                     &.monitor-0 {
                         visibility: visible;
                     }
@@ -340,19 +340,16 @@ $base-layer: 1000;
                 margin-left: 0.3em;
                 white-space: nowrap;
             }
-
             .first {
                 font-size: 1.15em;
                 // color: #fff0c7;
                 transform: rotateZ(6deg);  
             }
-
             .second {
                 font-size: 1.4em;
                 // color: #fff0c7;
                 transform: rotateZ(3deg);
             }
-
 
         }
     }

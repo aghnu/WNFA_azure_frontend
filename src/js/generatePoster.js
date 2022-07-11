@@ -6,6 +6,12 @@ export const ERROR_CODE = {
     NETWORK_ERROR: 1003,
 }
 
+export function wakeupServer() {
+    // this function is used to warm up azure function in case of a cold start
+    // can be expand in the future to add more feature
+    fetch(endpointURL + '?server=wakeup').then(()=>{}).catch(()=>{})
+}
+
 export function generatePoster(text, callbackSuc, callbackFail) {
     fetch(endpointURL, {
             method: 'POST',

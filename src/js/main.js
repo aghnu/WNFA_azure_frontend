@@ -1,7 +1,7 @@
 import { setRandInterval, flashElement } from './utilities';
 import { flickeringTextEl } from './flickerText';
 import { startTextTypingAnimation, clearTextTypingAnimation } from './typingAnimation';
-import { generatePoster,ERROR_CODE } from './generatePoster';
+import { generatePoster,ERROR_CODE,wakeupServer } from './generatePoster';
 
 import '../style/styles.scss'
 import transition_pic from '../img/transition.webp';
@@ -306,8 +306,10 @@ function main() {
             }
         }
     }, 2250);
-
-
 }
+
+
+// wakeup server first
+wakeupServer();
 
 window.addEventListener('load', main);
