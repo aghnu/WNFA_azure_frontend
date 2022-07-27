@@ -149,6 +149,7 @@ function initMonitor() {
 }
 
 function initStructures() {
+
     const site_structure = document.querySelector('#site-structure');
 
     // logo
@@ -185,8 +186,25 @@ function initStructures() {
     
     // prompt init
     const prompt = document.querySelector('#site-structure .prompt');
-    flickeringTextEl(prompt, 'System Ready / 系统就绪');
-    
+    flickeringTextEl(prompt, 'Server Starting / 服务器启动中');
+    site_structure.classList.add('processing');
+
+    // start server
+
+
+    // flickeringTextEl(prompt, 'System Ready / 系统就绪');
+    wakeupServer(()=>{
+        // server ok
+        flickeringTextEl(prompt, 'System Ready / 系统就绪');
+        site_structure.classList.remove('processing');
+    },()=>{
+        // net error / server error
+        flickeringTextEl(prompt, 'Server Error / 服务器错误');
+        site_structure.classList.add('processing');
+    });
+
+
+
     // enter button
     const button = document.querySelector('#site-structure .floor .monitor');
     const poster = document.querySelector('#site-structure .floor .monitor .poster');
@@ -307,9 +325,5 @@ function main() {
         }
     }, 2250);
 }
-
-
-// wakeup server first
-wakeupServer();
 
 window.addEventListener('load', main);

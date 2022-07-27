@@ -6,10 +6,24 @@ export const ERROR_CODE = {
     NETWORK_ERROR: 1003,
 }
 
-export function wakeupServer() {
+export function wakeupServer(callbackSuc, callbackFail) {
     // this function is used to warm up azure function in case of a cold start
     // can be expand in the future to add more feature
-    fetch(endpointURL + '?server=wakeup').then(()=>{}).catch(()=>{})
+    fetch(endpointURL + '?server=wakeup').then((r)=>{
+        if (r.status === 200) {
+            if (callbackSuc) {
+                callbackSuc();
+            }
+        } else {
+            if (callbackFail) {
+                callbackFail();
+            }
+        }
+    }).catch(()=>{
+        if (callbackFail) {
+            callbackFail();
+        }
+    })
 }
 
 export function generatePoster(text, callbackSuc, callbackFail) {
