@@ -142,7 +142,7 @@ function initMonitor() {
                 monitor.classList.add(monitor_frames[selected_monitor_frame_index].class);            
             });            
         }
-    }, 10000, 15000);
+    }, 15000, 20000);
 
     // wait for font
     document.fonts.ready.then(()=>{read_state.fontsLoaded = true});
@@ -161,12 +161,39 @@ function initStructures() {
 
     // console
     const input = document.querySelector('#site-console .input');
+    const inputPrompt = document.querySelector('#site-console-prompt')
 
     const printPlaceholderTextList = [
         ['Type into this area to write a poem, then, click the display device to generate the poster.', 0.075],
         ['点击这里写一首诗，然后单击显示装置生成海报。', 0.2],
         ['荷叶滴落泪水\n来不及 浸透书页\n一百年 一千年\n点燃一片通电的网\n\n回想 回想\n那心的铁片\n也要发出轰响', 0.2],
     ];
+
+    // input.addEventListener('focus', ()=>{
+    //     inputPrompt.classList.add('show');
+    // });
+
+    // input.addEventListener('blur', ()=>{
+    //     inputPrompt.classList.remove('show');
+    // });
+    const MAX_INPUT_LENGTH = 500;
+    input.maxLength = MAX_INPUT_LENGTH;
+    input.value = '';
+    let inputPromptAnimationTimeout;
+    input.addEventListener('input', () => {
+        clearTimeout(inputPromptAnimationTimeout);
+        inputPrompt.classList.add('show');
+        if (input.value.length >= MAX_INPUT_LENGTH) {
+            inputPrompt.classList.add('alert');
+        } else {
+            inputPrompt.classList.remove('alert');
+        }
+
+        inputPrompt.innerHTML = String(input.value.length) + '/' + String(MAX_INPUT_LENGTH);
+        inputPromptAnimationTimeout = setTimeout(() => {
+            inputPrompt.classList.remove('show');
+        }, 5000);
+    });
 
     const startPlaceholderTextListLoop = () => {
         const print = printPlaceholderTextList.shift();
@@ -188,17 +215,17 @@ function initStructures() {
     const prompt = document.querySelector('#site-structure .prompt');
     flickeringTextEl(prompt, 'Server Starting / 服务器启动中');
     site_structure.classList.add('processing');
-
+    loading = true;
     // start server
 
 
     // flickeringTextEl(prompt, 'System Ready / 系统就绪');
     wakeupServer(()=>{
         // server ok
+        loading = false;
         flickeringTextEl(prompt, 'System Ready / 系统就绪');
         site_structure.classList.remove('processing');
     },()=>{
-        // net error / server error
         flickeringTextEl(prompt, 'Server Error / 服务器错误');
         site_structure.classList.add('processing');
     });

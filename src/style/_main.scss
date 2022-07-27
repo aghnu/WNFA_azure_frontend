@@ -80,7 +80,7 @@ $base-layer: 1000;
         
         // background-color: #787882;
 
-        // word-break: break-all;
+        word-break: break-all;
         white-space: pre-wrap;
         line-height: 1.5em;
 
@@ -95,6 +95,28 @@ $base-layer: 1000;
         &:-ms-input-placeholder,
         &::-ms-input-placeholder {
             color: rgba(225, 225, 225, 0.5);
+        }
+    }
+
+    #site-console-prompt {
+        letter-spacing: 0.35em;
+        font-size: 1.25em;
+        position: absolute;
+        z-index: 9999;
+        // background-color: red;
+        width: calc(#{$structure-size} * 32);
+        height: 1.5em;
+        transform: translate(0, -50%) translate(0, -8.5em);
+        color: rgba(225, 225, 225, 0.5);
+        opacity: 0;
+        transition: opacity 0.75s, color 0.5s;
+        text-align: right;
+        &.show {
+            opacity: 1;
+        }
+
+        &.alert {
+            color: red;
         }
     }
 }
