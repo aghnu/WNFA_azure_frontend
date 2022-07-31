@@ -1,6 +1,6 @@
 # WNFA Poster Generator
 
-An rewrite of the WNFA project powered by Azure serverless products. I wrote this project to learn Azure, and serverless development. 
+A publicly-available online version of the original WNFA project with its backend supported by Azure serverless computing products. The frontend is redesigned to adapt the new requimemnts.
 
 For the backend, I removed tencent cloud OCR, and replaced tencent tmt with Azure translator. Art assets are now stored seperately on Azure storage, and an wrapper function is implementated on top of the Azure storage python SDK to ensure the poster program's access to art assets at runtime. I have also modified the program to pre-request art assets in batchs and taking advantage of the new python Asynchronous I/O with Azure Storage File Share Async client to reduce overhead. The backend code can be found here (https://github.com/aghnu/WNFA_azure_posters_gen)
 
