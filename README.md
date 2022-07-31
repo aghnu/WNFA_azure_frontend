@@ -11,8 +11,9 @@ Here are some links:
 - [The 3D virtual gallery for WNFA (Zhejiang Exhibition Hall from 06.01.2022 to 06.12.2022)](https://www.aghnu.me/gallery/WNFA)
 - [Original WNFA project (Django)](https://github.com/aghnu/WNFA)
 
+# Demo
 <p align="left">
-<img alt="gif_demo" width="50%" src=https://user-images.githubusercontent.com/46549455/179656463-7363c7a2-8b66-4cc2-a4be-f6e2e5041489.png>
+<img alt="gif_demo" width="100%" src=https://user-images.githubusercontent.com/46549455/182041209-8b61d765-70b7-45b3-8be9-6e40b5cf3ac6.png>
 </p>
 
 # Resources
