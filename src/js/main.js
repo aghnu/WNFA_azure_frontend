@@ -267,7 +267,7 @@ function initStructures() {
                 loading = false;
                 site_structure.classList.remove('processing');
 
-                console.error('ERROR: ' + error_code);
+                // console.error('ERROR: ' + error_code);
 
                 switch (error_code) {
                     case ERROR_CODE.NETWORK_ERROR:
